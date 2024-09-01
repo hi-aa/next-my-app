@@ -8,16 +8,6 @@ export default function Home() {
     { id: 4, name: "Bags", url: "/bags" },
     { id: 5, name: "Electronics", url: "/electronics" },
     { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "Gaming", url: "/gaming" },
-    { id: 6, name: "last", url: "/gaming" },
   ];
   return (
     <div>

@@ -12,7 +12,7 @@ interface SwiperArray {
 
 export default function CustomSwiper({ arr }: { arr: SwiperArray[] }) {
   return (
-    <div className="py-4 md:py-8">
+    <div className="flex flex-wrap items-center justify-center py-4 md:py-8">
       <Swiper
         spaceBetween={10}
         slidesPerView="auto"
