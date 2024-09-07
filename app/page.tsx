@@ -1,4 +1,18 @@
 import CustomSwiper from "@/component/common/custom-swiper";
+import Image from "next/image";
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
 
 export default function Home() {
   const categories = [
@@ -9,17 +23,46 @@ export default function Home() {
     { id: 5, name: "Electronics", url: "/electronics" },
     { id: 6, name: "Gaming", url: "/gaming" },
   ];
+
+  async function Products() {
+    const products = await fetch("https://fakestoreapi.com/products");
+    const productsJson = await products.json();
+    return (
+      <>
+        {productsJson.map((v: Product, i: number) => {
+          return (
+            <div key={i} className="h-auto max-w-full drop-shadow-xl">
+              <Image
+                src={v.image}
+                alt={v.title}
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="w-full h-80 rounded-lg"
+              />
+            </div>
+          );
+        })}
+      </>
+    );
+  }
   return (
     <div>
       {/* 카테고리 */}
       <CustomSwiper arr={categories} />
 
       {/* 리스트 */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div>
-          <img
-            className="h-auto max-w-full rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4  ">
+        <Products />
+        {/* <div className="h-auto max-w-full rounded-lg">
+          <Image
+            src={
+              "https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
+            }
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
             alt=""
           />
         </div>
@@ -99,7 +142,7 @@ export default function Home() {
             src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg"
             alt=""
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );
