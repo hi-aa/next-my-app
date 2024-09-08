@@ -1,6 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Footer from "@/components/common/footer";
+import Header from "@/components/common/header";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Header />
+        <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
+          <div className="py-4 bg-white dark:bg-gray-900 lg:pt-4 lg:pb-16">
+            <div className="px-4 mx-auto max-w-8xl lg:px-4 lg:text-center">
+              {children}
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }
