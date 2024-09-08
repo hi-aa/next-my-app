@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import BottomNavigation from "@/component/common/bottom-navigation";
 
 export const viewport: Viewport = {
@@ -20,14 +20,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html>
-      <body className={inter.className}>
-        <main className="pt-5 px-5 pb-20 mb-5">{children}</main>
-        <div>
-          <BottomNavigation />
-        </div>
-      </body>
-    </html>
-  );
+  return <main className="pt-5 px-5 pb-20 mb-5">{children}</main>;
 }

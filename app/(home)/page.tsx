@@ -38,7 +38,7 @@ export default function Home() {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="w-full h-80 rounded-lg"
+                className="w-full h-80 border-8 border-white rounded-lg"
               />
             </div>
           );

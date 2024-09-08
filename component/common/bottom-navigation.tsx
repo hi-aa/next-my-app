@@ -1,33 +1,121 @@
+import Link from "next/link";
+import React from "react";
+
 export default function BottomNavigation() {
+  const menus = [
+    {
+      id: 1,
+      name: "Home",
+      url: "/",
+      button: "tooltip-home",
+      path: () => {
+        return (
+          <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+        );
+      },
+    },
+    {
+      id: 2,
+      name: "Blog",
+      url: "/blog",
+      button: "tooltip-wallet",
+      path: () => {
+        return (
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"
+          />
+        );
+      },
+    },
+    {
+      id: 3,
+      name: "New",
+      url: "/blog/new",
+      button: "tooltip-new",
+      path: () => {
+        return (
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M9 1v16M1 9h16"
+          />
+        );
+      },
+    },
+    {
+      id: 4,
+      name: "Settings",
+      url: "/settings",
+      button: "tooltip-settings",
+      path: () => {
+        return (
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M5 12h14m-7 7V5"
+          />
+        );
+      },
+    },
+    {
+      id: 5,
+      name: "Profile",
+      url: "/profile",
+      button: "tooltip-profile",
+      path: () => {
+        return (
+          <path
+            fillRule="evenodd"
+            d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z"
+            clipRule="evenodd"
+          />
+        );
+      },
+    },
+  ];
   return (
     // <div>
     <div className="fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
-        <button
-          data-tooltip-target="tooltip-home"
-          type="button"
-          className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
-        >
-          <svg
-            className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-          </svg>
-          <span className="sr-only">Home</span>
-        </button>
-        <div
-          id="tooltip-home"
-          role="tooltip"
-          className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-        >
-          Home
-          <div className="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <button
+        {menus.map((v, i) => (
+          <React.Fragment key={i}>
+            <Link
+              href={v.url}
+              data-tooltip-target={v.button}
+              type="button"
+              className="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+            >
+              <svg
+                className="w-5 h-5 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                {v.path()}
+              </svg>
+              <span className="sr-only">{v.name}</span>
+            </Link>
+            <div
+              id={v.button}
+              role="tooltip"
+              className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+            >
+              {v.name}
+              <div className="tooltip-arrow" data-popper-arrow></div>
+            </div>
+          </React.Fragment>
+        ))}
+
+        {/* <button
           data-tooltip-target="tooltip-wallet"
           type="button"
           className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -137,7 +225,7 @@ export default function BottomNavigation() {
         >
           Profile
           <div className="tooltip-arrow" data-popper-arrow></div>
-        </div>
+        </div> */}
       </div>
     </div>
     // </div>
