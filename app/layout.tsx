@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/common/footer";
-import Header from "@/components/common/header";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 
 export const viewport: Viewport = {
   width: "device-width",
