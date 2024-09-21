@@ -6,6 +6,39 @@ export default function WriteList() {
   return (
     <>
       <form className="max-w-5xl mx-auto text-left">
+        <div className="flex gap-4 mb-5">
+          <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+            <input
+              id="bordered-radio-1"
+              type="radio"
+              value=""
+              name="bordered-radio"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label
+              htmlFor="bordered-radio-1"
+              className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
+              Default radio
+            </label>
+          </div>
+          <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+            <input
+              checked
+              id="bordered-radio-2"
+              type="radio"
+              value=""
+              name="bordered-radio"
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label
+              htmlFor="bordered-radio-2"
+              className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
+              Checked state
+            </label>
+          </div>
+        </div>
         <div className="mb-5">
           <label
             htmlFor="countries"
@@ -48,7 +81,7 @@ export default function WriteList() {
           </label>
           <textarea
             id="message"
-            rows="4"
+            rows={4}
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Write your thoughts here..."
           ></textarea>
