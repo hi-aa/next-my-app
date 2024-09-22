@@ -1,11 +1,25 @@
-"use client";
+// "use client";
+"use server";
+import { addVideo } from "@/api/sample-api";
 import React from "react";
 
-export default function WriteList() {
-  const fileRef = React.useRef<HTMLInputElement>(null);
+export default async function WriteList() {
+  // const fileRef = React.useRef<HTMLInputElement>(null);
+
+  const test = async () => {
+    "use server";
+    await addVideo({
+      title: "부티풀",
+      contents: "컨텐츠 test1234",
+      url: "https://www.youtube.com/embed/7MNlLXdEUwc?si=yFvhHJMBACaj-nAX",
+      reg_id: "test1",
+      rating: 0,
+    });
+  };
+
   return (
     <>
-      <form className="max-w-5xl mx-auto text-left">
+      <form className="max-w-5xl mx-auto text-left" action={test}>
         <div className="flex gap-4 mb-5">
           <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
             <input
@@ -24,7 +38,7 @@ export default function WriteList() {
           </div>
           <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
             <input
-              checked
+              defaultChecked
               id="bordered-radio-2"
               type="radio"
               value=""
@@ -103,9 +117,9 @@ export default function WriteList() {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
                   />
                 </svg>
@@ -149,9 +163,9 @@ export default function WriteList() {
             />
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM8 18h8l-2-4-1.5 2-2-4L8 18Zm7-8.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"
             />
           </svg> */}
@@ -161,21 +175,22 @@ export default function WriteList() {
             aria-describedby="user_avatar_help"
             id="user_avatar"
             type="file"
-            ref={fileRef}
+            // ref={fileRef}
           />
         </div>
 
         <button
-          type="button"
+          type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          // onClick={test}
         >
-          Default
+          Save
         </button>
         <button
           type="button"
           className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
         >
-          Light
+          Cancel
         </button>
       </form>
       {/* <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">
