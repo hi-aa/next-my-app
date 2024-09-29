@@ -1,6 +1,5 @@
-// "use client";
-"use server";
 import { addVideo } from "@/api/sample-api";
+import { revalidatePath } from "next/cache";
 import React from "react";
 
 export default async function WriteList() {
@@ -8,18 +7,46 @@ export default async function WriteList() {
 
   const test = async () => {
     "use server";
-    await addVideo({
-      title: "부티풀",
-      contents: "컨텐츠 test1234",
-      url: "https://www.youtube.com/embed/7MNlLXdEUwc?si=yFvhHJMBACaj-nAX",
-      reg_id: "test1",
-      rating: 0,
-    });
+    try {
+      await addVideo({
+        title: "부티풀",
+        contents: "컨텐츠 test1234",
+        url: "https://www.youtube.com/embed/7MNlLXdEUwc?si=yFvhHJMBACaj-nAX",
+        reg_id: "test1",
+        rating: 0,
+      });
+    } catch (e) {
+      console.log("에러");
+    }
+    // revalidatePath("/write");
   };
 
   return (
     <>
       <form className="max-w-5xl mx-auto text-left" action={test}>
+        {/* input */}
+        <div className="mb-6">
+          <label
+            htmlFor="default-input"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Default input
+          </label>
+          <input
+            type="text"
+            id="default-input"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        {/* radio */}
+        <div className="">
+          <label
+            htmlFor="default-input"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Default input
+          </label>
+        </div>
         <div className="flex gap-4 mb-5">
           <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
             <input
@@ -53,6 +80,7 @@ export default async function WriteList() {
             </label>
           </div>
         </div>
+        {/* select */}
         <div className="mb-5">
           <label
             htmlFor="countries"
@@ -85,7 +113,7 @@ export default async function WriteList() {
             </kbd>
           </div>
         </div>
-
+        {/* textarea */}
         <div className="mb-5">
           <label
             htmlFor="message"
@@ -100,7 +128,7 @@ export default async function WriteList() {
             placeholder="Write your thoughts here..."
           ></textarea>
         </div>
-
+        {/* file */}
         <div className="mb-5">
           <div className="flex items-center justify-center w-full">
             <label
@@ -179,30 +207,22 @@ export default async function WriteList() {
           />
         </div>
 
-        <button
-          type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          // onClick={test}
-        >
-          Save
-        </button>
-        <button
-          type="button"
-          className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-        >
-          Cancel
-        </button>
+        {/* button */}
+        <div className="mb-5">
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
-      {/* <p className="ms-auto text-xs text-gray-500 dark:text-gray-400">
-        Remember, contributions to this topic should follow our{" "}
-        <a
-          href="#"
-          className="text-blue-600 dark:text-blue-500 hover:underline"
-        >
-          Community Guidelines
-        </a>
-        .
-      </p> */}
     </>
   );
 }
