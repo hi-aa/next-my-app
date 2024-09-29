@@ -1,11 +1,14 @@
 import { addVideo } from "@/api/sample-api";
+import Tags from "@/components/gnb/write/tag";
 import { revalidatePath } from "next/cache";
+import Image from "next/image";
 import React from "react";
+import { text } from "stream/consumers";
 
 export default async function WriteList() {
   // const fileRef = React.useRef<HTMLInputElement>(null);
 
-  const test = async () => {
+  const saveVideo = async () => {
     "use server";
     try {
       await addVideo({
@@ -23,23 +26,86 @@ export default async function WriteList() {
 
   return (
     <>
-      <form className="max-w-5xl mx-auto text-left" action={test}>
-        {/* input */}
+      <form className="max-w-5xl mx-auto text-left" action={saveVideo}>
+        {/* Title */}
         <div className="mb-6">
           <label
-            htmlFor="default-input"
+            htmlFor="title"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Default input
+            제목<span className="text-xs">Title</span>
           </label>
           <input
             type="text"
-            id="default-input"
+            id="title"
+            name="title"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
+        {/* url */}
+        <div className="mb-6">
+          <label
+            htmlFor="url"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            {/* <p> */}
+            링크
+            <span className="text-xs">(embed 링크를 입력하세요)</span>
+            <div className="group inline">
+              <button
+                // data-popover-target="popover-description"
+                // data-popover-placement="bottom-end"
+                type="button"
+                // className="group"
+              >
+                <svg
+                  className="w-4 h-4 text-gray-400 hover:text-gray-500"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+                <span className="sr-only">Show information button</span>
+              </button>
+              <div
+                // data-popover
+                // id="popover-user-profile"
+                role="tooltip"
+                // invisible
+                // opacity-0
+                className="invisible opacity-0 group-hover:visible group-hover:opacity-100 z-10 absolute left-1/2 transform -translate-x-1/2 block w-3/5 h-3/5 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600"
+              >
+                <div className="p-3">
+                  <div className="flex">
+                    <Image
+                      src="/youtube.png"
+                      alt="guide"
+                      width={300}
+                      height={200}
+                    />
+                  </div>
+                </div>
+                <div data-popper-arrow></div>
+              </div>
+            </div>
+            {/* </p> */}
+          </label>
+          <input
+            type="text"
+            id="url"
+            name="url"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="https://www.youtube.com/embed/"
+          />
+        </div>
         {/* radio */}
-        <div className="">
+        {/* <div className="">
           <label
             htmlFor="default-input"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -79,58 +145,31 @@ export default async function WriteList() {
               Checked state
             </label>
           </div>
-        </div>
+        </div> */}
         {/* select */}
         <div className="mb-5">
-          <label
-            htmlFor="countries"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Select your country
-          </label>
-          <select
-            id="countries"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option>United States</option>
-            <option>Canada</option>
-            <option>France</option>
-            <option>Germany</option>
-          </select>
-
-          <div className="mt-2">
-            <kbd className="px-2 py-1.5 mr-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-              Shift
-            </kbd>
-            <kbd className="px-2 py-1.5 mr-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-              Ctrl
-            </kbd>
-            <kbd className="px-2 py-1.5 mr-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-              Tab
-            </kbd>
-            <kbd className="px-2 py-1.5 mr-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-              Caps Lock
-            </kbd>
-          </div>
+          <Tags />
         </div>
         {/* textarea */}
         <div className="mb-5">
           <label
-            htmlFor="message"
+            htmlFor="contents"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Your message
+            내용<span className="text-xs">Contents</span>
+            <span className="float-right">(/200)</span>
           </label>
           <textarea
-            id="message"
-            rows={4}
+            id="contents"
+            name="contents"
+            rows={3}
+            maxLength={200}
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Write your thoughts here..."
           ></textarea>
         </div>
         {/* file */}
         <div className="mb-5">
-          <div className="flex items-center justify-center w-full">
+          {/* <div className="flex items-center justify-center w-full">
             <label
               htmlFor="dropzone-file"
               className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -161,7 +200,7 @@ export default async function WriteList() {
               </div>
               <input id="dropzone-file" type="file" className="hidden" />
             </label>
-          </div>
+          </div> */}
 
           {/* <label
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
