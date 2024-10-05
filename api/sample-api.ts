@@ -33,7 +33,7 @@ export async function addVideo({
   // console.log("param:: ", { title, contents, url, reg_id, rating });
   const res =
     await sql`insert into tb_video(title, contents, url, reg_id, rating, rcmnd_cnt) values (${title}, ${contents}, ${url}, ${reg_id}, ${rating}, 0)`;
-  console.log("res:: ", { res });
+  // console.log("res:: ", { res });
 
   return { rowCount: res.rowCount, command: res.command };
 }

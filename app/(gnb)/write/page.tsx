@@ -1,27 +1,33 @@
 import { addVideo } from "@/api/sample-api";
+import WriteUrl from "@/components/gnb/write/url";
 import Tags from "@/components/gnb/write/tag";
-import { revalidatePath } from "next/cache";
-import Image from "next/image";
-import React from "react";
-import { text } from "stream/consumers";
+import WriteRating from "@/components/gnb/write/rating";
+import { redirect } from "next/navigation";
 
 export default async function WriteList() {
-  // const fileRef = React.useRef<HTMLInputElement>(null);
-
-  const saveVideo = async () => {
+  const saveVideo = async (formData: FormData) => {
     "use server";
+    let url = "";
     try {
-      await addVideo({
-        title: "부티풀",
-        contents: "컨텐츠 test1234",
-        url: "https://www.youtube.com/embed/7MNlLXdEUwc?si=yFvhHJMBACaj-nAX",
+      const params = {
+        title: formData.get("title")?.toString() || "",
+        contents: formData.get("contents")?.toString() || "",
+        url: formData.get("url")?.toString() || "",
+        rating: Number(formData.get("rating")) || 0,
         reg_id: "test1",
-        rating: 0,
-      });
+      };
+      const res = await addVideo(params);
+      // console.log(res);
+
+      if (res.rowCount === 1) {
+        url = "/video";
+      }
     } catch (e) {
-      console.log("에러");
+      console.log("에러", e);
+      // alert("등록실패");
+    } finally {
+      if (url) redirect("/video");
     }
-    // revalidatePath("/write");
   };
 
   return (
@@ -40,112 +46,16 @@ export default async function WriteList() {
             id="title"
             name="title"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
           />
         </div>
         {/* url */}
         <div className="mb-6">
-          <label
-            htmlFor="url"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            {/* <p> */}
-            링크
-            <span className="text-xs">(embed 링크를 입력하세요)</span>
-            <div className="group inline">
-              <button
-                // data-popover-target="popover-description"
-                // data-popover-placement="bottom-end"
-                type="button"
-                // className="group"
-              >
-                <svg
-                  className="w-4 h-4 text-gray-400 hover:text-gray-500"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                <span className="sr-only">Show information button</span>
-              </button>
-              <div
-                // data-popover
-                // id="popover-user-profile"
-                role="tooltip"
-                // invisible
-                // opacity-0
-                className="invisible opacity-0 group-hover:visible group-hover:opacity-100 z-10 absolute left-1/2 transform -translate-x-1/2 block w-3/5 h-3/5 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600"
-              >
-                <div className="p-3">
-                  <div className="flex">
-                    <Image
-                      src="/youtube.png"
-                      alt="guide"
-                      width={300}
-                      height={200}
-                    />
-                  </div>
-                </div>
-                <div data-popper-arrow></div>
-              </div>
-            </div>
-            {/* </p> */}
-          </label>
-          <input
-            type="text"
-            id="url"
-            name="url"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="https://www.youtube.com/embed/"
-          />
+          <WriteUrl />
         </div>
-        {/* radio */}
-        {/* <div className="">
-          <label
-            htmlFor="default-input"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >
-            Default input
-          </label>
+        <div className="mb-6">
+          <WriteRating />
         </div>
-        <div className="flex gap-4 mb-5">
-          <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-            <input
-              id="bordered-radio-1"
-              type="radio"
-              value=""
-              name="bordered-radio"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              htmlFor="bordered-radio-1"
-              className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Default radio
-            </label>
-          </div>
-          <div className="flex grow items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-            <input
-              defaultChecked
-              id="bordered-radio-2"
-              type="radio"
-              value=""
-              name="bordered-radio"
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              htmlFor="bordered-radio-2"
-              className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
-              Checked state
-            </label>
-          </div>
-        </div> */}
         {/* select */}
         <div className="mb-5">
           <Tags />
