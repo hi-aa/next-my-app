@@ -14,17 +14,16 @@ export default async function WriteList() {
         contents: formData.get("contents")?.toString() || "",
         url: formData.get("url")?.toString() || "",
         rating: Number(formData.get("rating")) || 0,
-        reg_id: "test1",
       };
-      const res = await addVideo(params);
-      // console.log(res);
+      const tagArr = formData.getAll("tag").map(String);
+      const res = await addVideo(params, tagArr);
+      console.log(res);
 
       if (res.rowCount === 1) {
         url = "/video";
       }
     } catch (e) {
       console.log("에러", e);
-      // alert("등록실패");
     } finally {
       if (url) redirect("/video");
     }
